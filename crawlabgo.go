@@ -33,7 +33,7 @@ func SaveItem(item interface{}) error {
 
 	if isDedup {
 		if dedupMethod == "overwrite" {
-			key := getTagName(dedupField, "json", item)
+			key := getTagName(dedupField, "bson", item)
 			value := elem.FieldByName(dedupField).String()
 			delete := bson.M{
 				key: value,

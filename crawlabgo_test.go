@@ -15,9 +15,9 @@ func setCrawlabEnv() {
 }
 
 type Item struct {
-	Name   string `json:"name"`
-	Age    int    `json:"age"`
-	TaskID string `json:"task_id"`
+	Name   string `bson:"name"`
+	Age    int    `bson:"age"`
+	TaskID string `bson:"task_id"`
 }
 
 func TestSaveItem(t *testing.T) {

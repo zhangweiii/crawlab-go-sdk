@@ -8,6 +8,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 var (
@@ -52,9 +53,9 @@ func Init() {
 func NewCollection() (*mongo.Collection, context.Context, error) {
 	var err error
 
+	applyURI := ""
 	if client == nil {
 		Init()
-		applyURI := ""
 		if len(username) > 0 {
 			applyURI = fmt.Sprintf(`mongodb://%s:%s@%s:%s`,
 				username, password, host, port)
@@ -63,6 +64,11 @@ func NewCollection() (*mongo.Collection, context.Context, error) {
 				host, port)
 		}
 		client, err = mongo.Connect(ctx, options.Client().ApplyURI(applyURI))
+	}
+
+	err = client.Ping(ctx, readpref.Primary())
+	if err != nil {
+		panic(fmt.Sprintf("mongo uri %s connect faild: %s", applyURI, err))
 	}
 
 	if col == nil {
