@@ -40,7 +40,7 @@ func Init() {
 	}
 	port = os.Getenv("CRAWLAB_MONGO_PORT")
 	if len(port) == 0 {
-		port = "27107"
+		port = "27017"
 	}
 	authSource = os.Getenv("CRAWLAB_MONGO_AUTHSOURCE")
 	if len(authSource) == 0 && len(username) > 0 {
@@ -54,10 +54,15 @@ func NewCollection() (*mongo.Collection, context.Context, error) {
 
 	if client == nil {
 		Init()
-		applyURI := fmt.Sprintf(`mongodb://%s:%s@%s:%s/%s?authSource=%s`,
-			username, password, host, port, database, authSource)
-		_ = applyURI
-		client, err = mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+		applyURI := ""
+		if len(username) > 0 {
+			applyURI = fmt.Sprintf(`mongodb://%s:%s@%s:%s`,
+				username, password, host, port)
+		} else {
+			applyURI = fmt.Sprintf(`mongodb://%s:%s`,
+				host, port)
+		}
+		client, err = mongo.Connect(ctx, options.Client().ApplyURI(applyURI))
 	}
 
 	if col == nil {

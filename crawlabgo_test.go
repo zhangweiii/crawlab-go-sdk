@@ -24,7 +24,10 @@ func TestSaveItem(t *testing.T) {
 	setCrawlabEnv()
 
 	t.Run("save item", func(t *testing.T) {
-		SaveItem(&Item{Name: "zhangweiii", Age: 1})
+		err := SaveItem(&Item{Name: "zhangweiii", Age: 1})
+		if err != nil {
+			t.Fatal(err)
+		}
 	})
 
 	t.Run("save item with overwrite", func(t *testing.T) {
