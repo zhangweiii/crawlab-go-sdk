@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -21,7 +20,7 @@ var (
 	host       string
 	port       string
 	authSource string
-	ctx, _     = context.WithTimeout(context.Background(), 10*time.Second)
+	ctx        = context.Background()
 )
 
 // CrawlabItem 插入mongo的struct需要继承它
