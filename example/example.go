@@ -1,9 +1,3 @@
-# crawlab-go-sdk
-crawlab-go-sdk
-
-## 示例
-
-``` GO
 package main
 
 import crawlabgo "github.com/zhangweiii/crawlab-go-sdk"
@@ -24,4 +18,3 @@ func main() {
 		})
 	}
 }
-```
